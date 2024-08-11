@@ -1,1 +1,1 @@
-# kube-oidc-metadata-reflector
+# kube-oidc-issuer-reflector
