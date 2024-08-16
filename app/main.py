@@ -3,6 +3,7 @@ import traceback
 from flask import Flask, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_wtf.csrf import CSRFProtect
 import json
 import logging
 from kubernetes import client, config
@@ -11,6 +12,8 @@ default_rate_limit = os.environ.get('DEFAULT_RATE_LIMIT', '10 per second')
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+csrf = CSRFProtect(app)
 
 limiter = Limiter(
     get_remote_address,

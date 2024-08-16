@@ -30,6 +30,7 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+            ephemeral-storage: "1Gi"
           livenessProbe:
             httpGet:
               path: /livez
@@ -46,6 +47,7 @@ spec:
             timeoutSeconds: 3
             periodSeconds: 10
             failureThreshold: 3
+      automountServiceAccountToken: true
 ---
 apiVersion: v1
 kind: Service
