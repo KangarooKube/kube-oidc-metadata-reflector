@@ -11,6 +11,7 @@ default_rate_limit = os.environ.get('DEFAULT_RATE_LIMIT', '10 per second')
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config['WTF_CSRF_ENABLED'] = False
 
 limiter = Limiter(
     get_remote_address,

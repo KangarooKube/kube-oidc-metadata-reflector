@@ -12,8 +12,8 @@ WORKDIR /app
 RUN apk upgrade --update-cache \
     && rm -rf /var/cache/apk/* \
     && pip3 install --no-cache-dir -r requirements.txt \
-    && addgroup --gid $USER_GID $GROUP_NAME \
-    && adduser -D -h $(pwd) -G $GROUP_NAME -H -u $USER_UID $USER_NAME
+    && addgroup --gid "$USER_GID" "$GROUP_NAME" \
+    && adduser -D -h $(pwd) -G "$GROUP_NAME" -H -u "$USER_UID" "$USER_NAME"
 
 USER $USER_NAME
 
