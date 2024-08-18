@@ -31,22 +31,22 @@ spec:
             memory: "128Mi"
             cpu: "500m"
             ephemeral-storage: "1Gi"
-          livenessProbe:
-            httpGet:
-              path: /livez
-              port: 8080
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
-            periodSeconds: 30
-            failureThreshold: 2
-          readinessProbe:
-            httpGet:
-              path: /readyz
-              port: 8080
-            initialDelaySeconds: 5
-            timeoutSeconds: 3
-            periodSeconds: 30
-            failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: 8080
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
+          periodSeconds: 30
+          failureThreshold: 2
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+          periodSeconds: 30
+          failureThreshold: 3
       automountServiceAccountToken: true
 ---
 apiVersion: v1
