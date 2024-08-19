@@ -76,7 +76,7 @@ def get_jwks() -> json:
 def health_liveness():
     try:
         k8s_client = get_k8s_client().VersionApi()
-        api_response = k8s_client.get_code()#_preload_content=False)
+        api_response = k8s_client.get_code()
     except Exception as e:
         app.logger.error("Health check failed!")
         app.logger.error(f"kubernetes.client.VersionApi.Exception: {e}")
