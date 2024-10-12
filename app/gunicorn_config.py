@@ -10,8 +10,6 @@ timeout = int(os.environ.get('GUNICORN_TIMEOUT', '120'))
 forwarded_allow_ips = '*'
 secure_scheme_headers = { 'X-Forwarded-Proto': 'https' }
 accesslog = "-"
-# Do not log requests for health checks and readiness checks.
-access_log_filter = lambda record: record["request"]["path"] not in ["/readyz", "/livez"]
 errorlog = "-"
 bind = '0.0.0.0:8080'
 

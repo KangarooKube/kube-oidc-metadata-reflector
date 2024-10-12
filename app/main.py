@@ -6,6 +6,7 @@ from flask_limiter.util import get_remote_address
 from flask_wtf.csrf import CSRFProtect
 import json
 import logging
+import typing as t
 from kubernetes import client, config
 
 default_rate_limit = os.environ.get('DEFAULT_RATE_LIMIT', '10 per second')
@@ -22,11 +23,36 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 
+class EndpointFilter(logging.Filter):
+    def __init__(
+        self,
+        path: str,
+        *args: t.Any,
+        **kwargs: t.Any,
+    ):
+        """
+        Initialize the EndpointFilter instance.
+
+        Args:
+            path (str): The URL path that should be excluded from the log output.
+            *args: Additional positional arguments to be passed to the superclass.
+            **kwargs: Additional keyword arguments to be passed to the superclass.
+        """
+        super().__init__(*args, **kwargs)
+        self._path = path
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.getMessage().find(self._path) == -1
+
+
 # Setup logging
 if __name__ != '__main__':
-    gunicorn_logger = logging.getLogger('gunicorn.error')
-    app.logger.handlers = gunicorn_logger.handlers
-    app.logger.setLevel(gunicorn_logger.level)
+    gunicorn_error_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_error_logger.handlers
+    app.logger.setLevel(gunicorn_error_logger.level)
+    gunicorn_access_logger = logging.getLogger("gunicorn.access")
+    gunicorn_access_logger.addFilter(EndpointFilter(path="/livez"))
+    gunicorn_access_logger.addFilter(EndpointFilter(path="/readyz"))
 
 def get_exception_description(e: Exception) -> str:
     """
