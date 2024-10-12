@@ -45,7 +45,7 @@ class JsonRequestFormatter(json_log_formatter.JSONFormatter):
             url += f"?{record.args['q']}"
 
         return dict(
-            remote_ip=record.args.get("{X-Forwarded-For}i", record.args["h"]),
+            remote_ip=record.args["{X-Forwarded-For}i"],
             method=record.args["m"],
             path=url,
             status=str(record.args["s"]),
