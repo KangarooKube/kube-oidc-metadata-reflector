@@ -4,4 +4,4 @@ gunicorn==23.0.0
 flask_limiter==3.8.0
 json_log_formatter==1.1
 setuptools>=70.0.0
-flask_wtf==1.2.1
+flask_wtf==1.2.2
